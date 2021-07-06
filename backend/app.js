@@ -1,9 +1,18 @@
 const express = require('express');
+const app = express();
+require('dotenv').config();
 
 const usersRoutes = require('./routes/usersRoutes');
 
-const appRouter = express.Router();
+app.use((req, res, next) =>{
+    res.setHeader('Access-Control-Allow-Origin', '*');//Toutes les origines ont le droit d'accéder au serveur
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+    next();
+});
 
-appRouter.route('/users/auth/', usersRoutes);
+app.use(express.json());//Remplace bodyParser.json()
 
-module.exports = appRouter;
+app.use('/api/users/', usersRoutes);
+
+module.exports = app;
