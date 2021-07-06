@@ -9,6 +9,7 @@ const models = require('../models');
 exports.signup = (req, res) =>{
     const email = req.body.email;
     const password = req.body.password;
+    const cryptMail = CryptoJs.AES.encrypt(req.body.email, key, {iv: iv}).toString();
 
     console.log("email : " + email);
     console.log("password : " + password);
@@ -22,12 +23,11 @@ exports.signup = (req, res) =>{
         return res.status(400).json({message: "password invalid"})
     }
 
-    models.User.findOne({ attributes: ['mail'], where: { mail: req.body.email } })
-        .then(userFound =>{
+    models.User.findOne({ attributes: ['mail'], where: { mail: cryptMail } })
+        .then( userFound =>{
             if (!userFound){
                 bcrypt.hash(req.body.password, 10)
                     .then(hash => {
-                        const cryptMail = CryptoJs.AES.encrypt(req.body.email, key, {iv: iv}).toString();
                         const user = models.User.create({mail: cryptMail, password: hash, isAdmin: 0})
                                         .then(() => res.status(201).json({message: 'user created'}))
                                         .catch(error => {res.status(500).json({message: 'cannot add user'})});
