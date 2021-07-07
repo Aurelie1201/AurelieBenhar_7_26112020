@@ -34,14 +34,44 @@ exports.signup = (req, res) =>{
                     })
                     .catch(error => res.status(500).json({error}));
             } else{
-                return res.status(400).json({message: 'user already exist'});
+                return res.status(400).json({message: 'user already exists'});
             }
         })
         .catch(error => res.status(500).json({error}));
 };
 
 exports.login = (req, res) =>{
+    const email = req.body.email;
+    const password = req.body.password;
+    const cryptMail = CryptoJs.AES.encrypt(req.body.email, key, {iv: iv}).toString();
 
+    if(email == null || password == null){
+        return res.status(400).json({message: 'missing parameters'});
+    }
+
+    models.User.findOne({ where: { mail: cryptMail}})
+        .then( userFound =>{
+            if (userFound){
+                bcrypt.compare(password, userFound.password)
+                .then(valid =>{
+                    if (!valid){
+                        return res.status(401).json({error: 'Mot de passe incorrect'});
+                    }
+                    res.status(200).json({
+                        userId: userFound.id,
+                        token: jwt.sign(
+                            {userId: userFound.id},
+                            process.env.TOKEN_KEY,
+                            {expiresIn: '24h'}
+                        )
+                    });
+                })
+                .catch(error => res.status(500).json({error}))
+            } else{
+                return res.status(400).json({message: 'user do not exists'});
+            }
+        })
+        .catch( error => res.status(500).json({error}));
 };
 
 /**
