@@ -3,6 +3,7 @@ const app = express();
 require('dotenv').config();
 
 const usersRoutes = require('./routes/usersRoutes');
+const messagesRoutes = require('./routes/messagesRoutes');
 
 app.use((req, res, next) =>{
     res.setHeader('Access-Control-Allow-Origin', '*');//Toutes les origines ont le droit d'accéder au serveur
@@ -14,5 +15,6 @@ app.use((req, res, next) =>{
 app.use(express.json());//Remplace bodyParser.json()
 
 app.use('/api/users/', usersRoutes);
+app.use('/api/messages/', messagesRoutes);
 
 module.exports = app;
