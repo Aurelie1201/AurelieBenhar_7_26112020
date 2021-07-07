@@ -23,12 +23,12 @@ exports.signup = (req, res) =>{
         return res.status(400).json({message: "password invalid"})
     }
 
-    models.User.findOne({ attributes: ['mail'], where: { mail: cryptMail } })
+    models.User.findOne({ attributes: ['email'], where: { email: cryptMail } })
         .then( userFound =>{
             if (!userFound){
                 bcrypt.hash(req.body.password, 10)
                     .then(hash => {
-                        const user = models.User.create({mail: cryptMail, password: hash, isAdmin: 0})
+                        const user = models.User.create({email: cryptMail, password: hash, isAdmin: 0})
                                         .then(() => res.status(201).json({message: 'user created'}))
                                         .catch(error => {res.status(500).json({message: 'cannot add user'})});
                     })
@@ -49,7 +49,7 @@ exports.login = (req, res) =>{
         return res.status(400).json({message: 'missing parameters'});
     }
 
-    models.User.findOne({ where: { mail: cryptMail}})
+    models.User.findOne({ where: { email: cryptMail}})
         .then( userFound =>{
             if (userFound){
                 bcrypt.compare(password, userFound.password)
@@ -73,6 +73,31 @@ exports.login = (req, res) =>{
         })
         .catch( error => res.status(500).json({error}));
 };
+
+exports.getUser = (req, res) =>{
+    const userId = req.body.userId;
+
+    models.User.findOne({ attributes: ['id', 'email'], where: { id: userId}})
+        .then( user =>{
+            if(user){
+                res.status(200).json(user);
+            } else{
+                res.status(404).json({message: 'user not find'});
+            };
+        })
+        .catch( error => res.status(500).json({error}));
+};
+
+// exports.updatePassword = (req, res) =>{
+//     const userId = req.body.userId;
+//     const newPassword = req.body.password;
+
+//     models.User.findOne({ attributes: ['id', 'password'], where: { id: userId}})
+//         .then( user =>{
+//             user.update
+//         })
+//         .catch( error => res.status(500).json({error}));
+// };
 
 /**
  * Vérification d'un mail d'une apparence valide
