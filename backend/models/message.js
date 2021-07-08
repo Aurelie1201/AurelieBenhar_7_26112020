@@ -10,7 +10,12 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      models.Message.belongsTo(models.User, {
+        foreignKey: {
+          allowNull: false
+        }
+      })
+      models.Message.hasMany(models.Comment);
     }
   };
   Message.init({
@@ -20,15 +25,6 @@ module.exports = (sequelize, DataTypes) => {
     attachment: DataTypes.STRING,
     likes: DataTypes.INTEGER
   }, {
-    classMethods:{
-      associate: (models) =>{
-        models.Message.belongsTo(models.User, {
-          foreignKey: {
-            allowNull: false
-          }
-        })
-      }
-    },
     sequelize,
     modelName: 'Message',
   });
