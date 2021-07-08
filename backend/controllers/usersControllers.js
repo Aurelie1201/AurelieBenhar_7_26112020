@@ -23,7 +23,7 @@ exports.signup = (req, res) =>{
         return res.status(400).json({message: "password invalid"})
     }
 
-    models.User.findOne({ attributes: ['email'], where: { email: cryptMail } })
+    models.User.findOne({where: { email: cryptMail } })
         .then( userFound =>{
             if (!userFound){
                 bcrypt.hash(req.body.password, 10)
@@ -55,7 +55,7 @@ exports.login = (req, res) =>{
                 bcrypt.compare(password, userFound.password)
                 .then(valid =>{
                     if (!valid){
-                        return res.status(401).json({error: 'Mot de passe incorrect'});
+                        return res.status(401).json({error: 'wrong password'});
                     }
                     res.status(200).json({
                         userId: userFound.id,
@@ -87,6 +87,7 @@ exports.getUser = (req, res) =>{
         })
         .catch( error => res.status(500).json({error}));
 };
+
 
 // exports.updatePassword = (req, res) =>{
 //     const userId = req.body.userId;

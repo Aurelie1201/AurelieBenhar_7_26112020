@@ -16,3 +16,20 @@ exports.createMessage  = (req, res) =>{
         })
         .catch(error => res.status(500).json({error}));
 };
+
+exports.getOneMessage = (req, res) =>{
+    const idMessage = req.params.id;
+
+    models.Message.findOne({where: {id: req.params.id}})
+        .then(message =>{
+            res.status(200).json({message});
+        })
+        .catch(error => res.status(500).json({error}));
+};
+
+exports.getAllMessages = (req, res) =>{
+    models.Message.findAll({ attributes: ['title', 'content', 'attachment', 'likes'], order: [['id', 'ASC']]})
+        .then(messages => res.status(200).json(messages))
+        .catch(error => res.status(500).json({error}));
+};
+
