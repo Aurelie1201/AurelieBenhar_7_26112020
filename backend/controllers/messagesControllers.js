@@ -33,3 +33,18 @@ exports.getAllMessages = (req, res) =>{
         .catch(error => res.status(500).json({error}));
 };
 
+exports.deleteMessage = (req, res) =>{
+    const idMessage = req.params.id;
+    const userId = req.body.userId;
+
+    models.Message.findOne({where: {id: req.params.id}})
+        .then(message =>{
+            if(userId != message.userId){
+                res.status(401).json({message: "Unauthorized to delete this message"});
+            } else{
+                message.destroy();
+                res.status(200).json({message: "Message deleted"});
+            };
+        })
+        .catch(error => res.status(500).json({error}));
+};
