@@ -10,7 +10,7 @@ exports.createMessage  = (req, res) =>{
         return res.status(400).json({ message: "Parameters missing"});
     }
     console.log(userId);
-    models.Message.create({ title: title, content: content, likes: 0, userId: userId})
+    models.Message.create({ title: title, content: content, likes: 0, UserId: userId})
         .then(newMessage =>{
             res.status(200).json(newMessage);
         })
