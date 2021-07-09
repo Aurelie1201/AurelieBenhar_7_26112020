@@ -75,7 +75,7 @@ exports.login = (req, res) =>{
 };
 
 exports.getUser = (req, res) =>{
-    const userId = req.body.userId;
+    const userId = req.params.userId;
 
     models.User.findOne({ attributes: ['id', 'email'], where: { id: userId}})
         .then( user =>{
@@ -88,6 +88,20 @@ exports.getUser = (req, res) =>{
         .catch( error => res.status(500).json({error}));
 };
 
+exports.deleteUser = (req, res) =>{
+    const userId = req.params.id;
+
+    models.User.findOne({where: {id: userId}})
+        .then(user =>{
+                models.Message.destroy({where: {userId: userId}})
+                    .then(destroy =>{
+                        user.destroy();
+                        res.status(200).json({message: "User deleted"});
+                    })
+                    .catch(error => res.status(500).json({error}));
+        })
+        .catch(error => res.status(500).json({error}));
+}
 
 // exports.updatePassword = (req, res) =>{
 //     const userId = req.body.userId;
