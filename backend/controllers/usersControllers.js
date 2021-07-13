@@ -101,15 +101,29 @@ exports.deleteUser = (req, res) =>{
 
     models.User.findOne({where: {id: userId}})
         .then(user =>{
-                models.Message.destroy({where: {userId: userId}})
-                    .then(destroy =>{
-                        user.destroy();
-                        res.status(200).json({message: "User deleted"});
+                models.Message.findAll({ where: {userId: userId}})
+                    .then(messages =>{
+                        for (let message of messages){
+                            models.Comment.destroy({ where: {messageId: message.id}});
+                        }
+                        models.Message.destroy({where: {userId: userId}})
+                            .then(destroy =>{
+                                user.destroy();
+                                res.status(200).json({message: "User deleted"});
+                            })
+                            .catch(error => res.status(500).json({error}));
                     })
                     .catch(error => res.status(500).json({error}));
         })
         .catch(error => res.status(500).json({error}));
 }
+
+// models.Message.destroy({where: {userId: userId}})
+//                     .then(destroy =>{
+//                         user.destroy();
+//                         res.status(200).json({message: "User deleted"});
+//                     })
+//                     .catch(error => res.status(500).json({error}));
 
 // exports.updatePassword = (req, res) =>{
 //     const userId = req.body.userId;
