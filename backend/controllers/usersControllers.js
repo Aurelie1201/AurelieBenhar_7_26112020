@@ -9,11 +9,13 @@ const models = require('../models');
 exports.signup = (req, res) =>{
     const email = req.body.email;
     const password = req.body.password;
+    const lastName = req.body.lastName;
+    const firstName = req.body.firstName;
     const cryptMail = CryptoJs.AES.encrypt(req.body.email, key, {iv: iv}).toString();
 
     console.log("email : " + email);
     console.log("password : " + password);
-    if(email == null || password == null){
+    if(email == null || password == null || lastName == null || firstName == null){
         return res.status(400).json({message: 'missing parameters'});
     }
     if (!testMail(req.body.email)){
@@ -28,7 +30,13 @@ exports.signup = (req, res) =>{
             if (!userFound){
                 bcrypt.hash(req.body.password, 10)
                     .then(hash => {
-                        const user = models.User.create({email: cryptMail, password: hash, isAdmin: 0})
+                        const user = models.User.create({
+                                        email: cryptMail, 
+                                        password: hash, 
+                                        lastName: lastName, 
+                                        firstName: firstName, 
+                                        isAdmin: 0
+                                        })
                                         .then(() => res.status(201).json({message: 'user created'}))
                                         .catch(error => {res.status(500).json({message: 'cannot add user'})});
                     })
@@ -77,7 +85,7 @@ exports.login = (req, res) =>{
 exports.getUser = (req, res) =>{
     const userId = req.params.userId;
 
-    models.User.findOne({ attributes: ['id', 'email'], where: { id: userId}})
+    models.User.findOne({ where: { id: userId}})
         .then( user =>{
             if(user){
                 res.status(200).json(user);
