@@ -1,0 +1,16 @@
+nav{
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    & a{
+        display: flex;
+        justify-content: space-between;
+        color: black;
+        text-decoration: none;
+        margin: auto;
+        background-color: $color-logo-clair;
+        border-radius: 50% 20% / 10% 40%;
+        padding: 13px;
+    };
+};

@@ -1,0 +1,37 @@
+header {
+  display: flex;
+  justify-content: center;
+  height: 200px;
+  border-bottom: solid 3px black;
+}
+
+.header__logo {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  border-top: solid 3px black;
+  padding-top: 50px;
+}
+
+nav {
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+nav a {
+  display: flex;
+  justify-content: space-between;
+  color: black;
+  text-decoration: none;
+  margin: auto;
+  background-color: #ffd7d7;
+  border-radius: 50% 20%/10% 40%;
+  padding: 13px;
+}
+
+/*# sourceMappingURL=style.css.map */
