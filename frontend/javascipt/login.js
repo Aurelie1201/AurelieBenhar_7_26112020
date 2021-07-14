@@ -1,32 +1,21 @@
-console.log(apiRoute("signup"));
-
 const form = document.getElementsByTagName('form')[0];
 
 form.addEventListener('submit', (event=>{
-    const firstName = document.getElementById("prenom").value;
-    const lastName = document.getElementById("nom").value;
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
-
-    if(!testMot(firstName) || !testMot(lastName) || !testMail(email || !testPassword(password))){
+    console.log('coucou')
+    if(!testMail(email) || !testPassword(password)){
         alert("Veuillez renseignez des champs corrects");
     } else{
-        const user = { firstName: firstName, lastName: lastName, email: email, password: password };
+        const user = { email: email, password: password };
         console.log(user);
-        fetch(apiRoute("signup"), {
+        fetch(apiRoute("login"), {
             method: "POST",
             headers:{ Accept: "application/json", "Content-Type": "application/json"},
             body: JSON.stringify(user)
         })
-        .then(response =>{
-            console.log(response.json().message);
-            // if(response.message === "user created"){
-            //     alert("Votre inscription a bien été effectuée. Vous pouvez à présent vous connecter");
-            //     window.location.href="/frontend/html/login.html";
-            // } else if(response.message === "user already exists"){
-            //     alert("Vous êtes déjà inscrit");
-            // }
-        })
+        // .then(response => {response.json(); console.log("recoucou")})
+        .then(response => {const truc = response.json(); console.log(truc.userId)})
         .catch(error =>{console.log(error)});
     };
 
@@ -54,15 +43,4 @@ const testPassword = (password) =>{
     let regPassword = new RegExp ("^[0-9a-zA-Z._-]{8,}");
     console.log("coucou password");
     return regPassword.test(password);
-};
-
-/**
- * Vérification d'un mot sans caractères spéciaux
- * @param {String} mot 
- * @returns {Boolean}
- */
-const testMot = (mot) =>{
-    let regMot = new RegExp ("^[a-zA-ZéèàçîïÉÈÎÏ '-]+$");
-
-    return regMot.test(mot);
 };
