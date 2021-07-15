@@ -14,8 +14,12 @@ form.addEventListener('submit', (event=>{
             headers:{ Accept: "application/json", "Content-Type": "application/json"},
             body: JSON.stringify(user)
         })
-        // .then(response => {response.json(); console.log("recoucou")})
-        .then(response => {const truc = response.json(); console.log(truc.userId)})
+        .then(response => response.json())
+        .then(response =>{
+            sessionStorage.setItem("userId", response.userId);
+            sessionStorage.setItem("token", response.token);
+            window.location.href = "home.html";
+        }) 
         .catch(error =>{console.log(error)});
     };
 

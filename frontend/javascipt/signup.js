@@ -18,14 +18,14 @@ form.addEventListener('submit', (event=>{
             headers:{ Accept: "application/json", "Content-Type": "application/json"},
             body: JSON.stringify(user)
         })
+        .then(response => response.json())
         .then(response =>{
-            console.log(response.json().message);
-            // if(response.message === "user created"){
-            //     alert("Votre inscription a bien été effectuée. Vous pouvez à présent vous connecter");
-            //     window.location.href="/frontend/html/login.html";
-            // } else if(response.message === "user already exists"){
-            //     alert("Vous êtes déjà inscrit");
-            // }
+            if(response.message === "user created"){
+                alert("Votre inscription a bien été effectuée. Vous pouvez à présent vous connecter");
+                window.location.href="login.html";
+            } else if(response.message === "user already exists"){
+                alert("Vous êtes déjà inscrit");
+            }
         })
         .catch(error =>{console.log(error)});
     };

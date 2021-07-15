@@ -63,6 +63,17 @@ input {
   box-shadow: 1px 1px 1px #fd2d01;
 }
 
+.change-choice {
+  margin-left: 55px;
+  padding: 5px;
+  border: 1px solid #fd2d01;
+  box-shadow: 1px 1px 1px #fd2d01;
+  border-radius: 5px;
+  color: black;
+  background-color: white;
+  text-decoration: none;
+}
+
 nav {
   height: 200px;
   display: flex;
