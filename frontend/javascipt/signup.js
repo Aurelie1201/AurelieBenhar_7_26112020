@@ -8,61 +8,36 @@ form.addEventListener('submit', (event=>{
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
-    if(!testMot(firstName) || !testMot(lastName) || !testMail(email || !testPassword(password))){
-        alert("Veuillez renseignez des champs corrects");
-    } else{
-        const user = { firstName: firstName, lastName: lastName, email: email, password: password };
-        console.log(user);
-        fetch(apiRoute("signup"), {
-            method: "POST",
-            headers:{ Accept: "application/json", "Content-Type": "application/json"},
-            body: JSON.stringify(user)
-        })
+    
+    const user = { firstName: firstName, lastName: lastName, email: email, password: password };
+    console.log(user);
+    fetch(apiRoute("signup"), {
+        method: "POST",
+        headers:{ Accept: "application/json", "Content-Type": "application/json"},
+        body: JSON.stringify(user)
+    })
         .then(response => response.json())
         .then(response =>{
-            if(response.message === "user created"){
-                alert("Votre inscription a bien été effectuée. Vous pouvez à présent vous connecter");
-                window.location.href="login.html";
-            } else if(response.message === "user already exists"){
-                alert("Vous êtes déjà inscrit");
+            switch (response.message){
+                case "missing parameters": alert("Veuillez remplir tous les champs");
+                break;
+                case "email address invalid": alert("Veuillez entrer une adresse mail valide");
+                break;
+                case "password invalid": alert("Veuillez entrer un mot de passe d'au moins 8 caractères, les seules caractères spéciaux autorisés sont: ._-");
+                break;
+                case "word invalid": alert("Votre nom ou votre prénom ne sont pas valides");
+                break;
+                case "user already exists": alert("un utilisateur est déjà enregistré avec cette adresse mail");
+                break;
+                case "user created": {
+                                        alert("Vous êtes bien enregistré, vous pouvez vous connecter");
+                                        window.location.href = "login.html";
+                                    };
+                break;
+                default: alert("un problème est survenu");
             }
         })
         .catch(error =>{console.log(error)});
-    };
 
     event.preventDefault();
 }));
-
-/**
- * Vérification d'un mail d'une apparence valide
- * @param {String} mail 
- * @returns {Boolean}
- */
- const testMail = (mail) =>{
-    let regMail = new RegExp ("^[0-9a-z._-]+@{1}[0-9a-z.-]{2,}[.]{1}[a-z]{2,5}");
-    console.log("coucou mail");
-    return regMail.test(mail);
-};
-
-/**
- * Vérification d'un mot de passe contenant au moins 8 caractères
- * et contenant des chiffres, des lettres et seulement ._- comme caractères spéciaux
- * @param {String} password 
- * @returns {Boolean}
- */
-const testPassword = (password) =>{
-    let regPassword = new RegExp ("^[0-9a-zA-Z._-]{8,}");
-    console.log("coucou password");
-    return regPassword.test(password);
-};
-
-/**
- * Vérification d'un mot sans caractères spéciaux
- * @param {String} mot 
- * @returns {Boolean}
- */
-const testMot = (mot) =>{
-    let regMot = new RegExp ("^[a-zA-ZéèàçîïÉÈÎÏ '-]+$");
-
-    return regMot.test(mot);
-};

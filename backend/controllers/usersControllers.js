@@ -17,15 +17,14 @@ exports.signup = (req, res) =>{
     console.log("password : " + password);
     if(email == null || password == null || lastName == null || firstName == null){
         return res.status(400).json({message: 'missing parameters'});
-    }
-    if (!testMail(req.body.email)){
+    } else if (!testMail(email)){
         return res.status(400).json({message: "email address invalid"});
-    }
-    if (!testPassword(req.body.password)){
+    }else if (!testPassword(password)){
         return res.status(400).json({message: "password invalid"})
-    }
-
-    models.User.findOne({where: { email: cryptMail } })
+    } else if(!testMot(lastName) || !testMot(firstName)){
+        return res.status(400).json({message: "word invalid"})
+    } else {
+        models.User.findOne({where: { email: cryptMail } })
         .then( userFound =>{
             if (!userFound){
                 bcrypt.hash(req.body.password, 10)
@@ -46,6 +45,7 @@ exports.signup = (req, res) =>{
             }
         })
         .catch(error => res.status(500).json({error}));
+    };
 };
 
 exports.login = (req, res) =>{
@@ -163,6 +163,17 @@ exports.deleteUser = (req, res) =>{
  */
 const testPassword = (password) =>{
     let regPassword = new RegExp ("^[0-9a-zA-Z._-]{8,}");
-    console.log("coucou password");
+    console.log(regPassword.test(password));
     return regPassword.test(password);
+};
+
+/**
+ * Vérification d'un mot sans caractères spéciaux
+ * @param {String} mot 
+ * @returns {Boolean}
+ */
+ const testMot = (mot) =>{
+    let regMot = new RegExp ("^[a-zA-ZéèàçîïÉÈÎÏ '-]+$");
+
+    return regMot.test(mot);
 };
