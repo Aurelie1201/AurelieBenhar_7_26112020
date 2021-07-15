@@ -63,7 +63,7 @@ exports.login = (req, res) =>{
                 bcrypt.compare(password, userFound.password)
                 .then(valid =>{
                     if (!valid){
-                        return res.status(401).json({error: 'wrong password'});
+                        return res.status(401).json({message: 'wrong password'});
                     }
                     res.status(200).json({
                         userId: userFound.id,
@@ -83,12 +83,20 @@ exports.login = (req, res) =>{
 };
 
 exports.getUser = (req, res) =>{
-    const userId = req.params.userId;
-
+    const userId = req.params.id;
+    
     models.User.findOne({ where: { id: userId}})
         .then( user =>{
             if(user){
-                res.status(200).json(user);
+                // const decrypt = CryptoJs.AES.decrypt(user.email, key);
+                // const decryptMail = JSON.parse(decrypt.toString(CryptoJS.enc.Hex));
+                // console.log(decryptMail);
+                models.Message.findAndCountAll({ where: { userId: user.id}})
+                    .then(messages =>{
+                        res.status(200).json({ "firstName": user.firstName, "lastName": user.lastName, "messagesCount": messages.count});
+                        
+                    })
+                    .catch(error => res.status(500).json({error}));
             } else{
                 res.status(404).json({message: 'user not find'});
             };

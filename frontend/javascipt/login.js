@@ -16,9 +16,19 @@ form.addEventListener('submit', (event=>{
         })
         .then(response => response.json())
         .then(response =>{
-            sessionStorage.setItem("userId", response.userId);
-            sessionStorage.setItem("token", response.token);
-            window.location.href = "home.html";
+            if(response.token){
+                sessionStorage.setItem("userId", response.userId);
+                sessionStorage.setItem("token", response.token);
+                window.location.href = "home.html";
+            } else{
+                switch (response.message){
+                    case "wrong password": alert("Mote de passe incorrect");
+                    break;
+                    case "user do not exists": alert("Aucun utilisateur correspond à cette adresse mail");
+                    break;
+                    default: alert("Une erreur est survenue");
+                };
+            }
         }) 
         .catch(error =>{console.log(error)});
     };

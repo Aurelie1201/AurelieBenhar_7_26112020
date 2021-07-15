@@ -119,7 +119,7 @@ footer {
 }
 .main-profil h1, .main-profil h2 {
   text-align: center;
-  color: #fd2d01;
+  color: #0D7D69;
 }
 .main-profil #name {
   font-size: larger;
@@ -128,8 +128,8 @@ footer {
 .main-profil input {
   margin-bottom: 20px;
   padding: 5px;
-  border: 1px solid #fd2d01;
-  box-shadow: 1px 1px 1px #fd2d01;
+  border: 1px solid #0D7D69;
+  box-shadow: 1px 1px 1px #0D7D69;
   border-radius: 5px;
   color: black;
   font-size: large;

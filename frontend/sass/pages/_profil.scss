@@ -5,7 +5,7 @@
     padding: 50px;
     & h1, h2{
         text-align: center;
-        color: $color-logo-dark;
+        color: #0D7D69;
     };
     & #name{
         font-size: larger;
@@ -14,8 +14,8 @@
     & input{
         margin-bottom: 20px;
         padding: 5px;
-        border: 1px solid $color-logo-dark;
-        box-shadow: 1px 1px 1px $color-logo-dark;
+        border: 1px solid #0D7D69;
+        box-shadow: 1px 1px 1px #0D7D69;
         border-radius: 5px;
         color: black;
         font-size: large;
