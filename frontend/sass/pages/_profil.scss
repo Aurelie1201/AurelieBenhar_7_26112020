@@ -1,0 +1,33 @@
+.main-profil{
+    background-image: url("../assetts/icon.png");
+    background-size: cover;
+    background-position: center;
+    padding: 50px;
+    & h1, h2{
+        text-align: center;
+        color: $color-logo-dark;
+    };
+    & #name{
+        font-size: larger;
+        font-weight: bold;
+    };
+    & input{
+        margin-bottom: 20px;
+        padding: 5px;
+        border: 1px solid $color-logo-dark;
+        box-shadow: 1px 1px 1px $color-logo-dark;
+        border-radius: 5px;
+        color: black;
+        font-size: large;
+        background-color: white;
+        text-decoration: none;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    };
+    @media (min-width: 500px){
+        & div, p{
+            text-align: center;
+        }
+    }
+};

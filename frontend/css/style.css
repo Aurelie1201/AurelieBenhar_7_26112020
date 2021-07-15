@@ -13,6 +13,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-bottom: solid 3px black;
 }
 .header-home img {
   max-width: 100%;
@@ -108,6 +109,40 @@ footer {
 .nav-index a {
   display: flex;
   justify-content: space-between;
+}
+
+.main-profil {
+  background-image: url("../assetts/icon.png");
+  background-size: cover;
+  background-position: center;
+  padding: 50px;
+}
+.main-profil h1, .main-profil h2 {
+  text-align: center;
+  color: #fd2d01;
+}
+.main-profil #name {
+  font-size: larger;
+  font-weight: bold;
+}
+.main-profil input {
+  margin-bottom: 20px;
+  padding: 5px;
+  border: 1px solid #fd2d01;
+  box-shadow: 1px 1px 1px #fd2d01;
+  border-radius: 5px;
+  color: black;
+  font-size: large;
+  background-color: white;
+  text-decoration: none;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+@media (min-width: 500px) {
+  .main-profil div, .main-profil p {
+    text-align: center;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */
