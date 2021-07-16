@@ -14,27 +14,30 @@
     <header class="header-home">
         <img src="../assetts/icon-left-font.png" alt="Groupomania"/>
         <nav>
-            <a href="createMessage.html" class="link">Poster un message</a>
+            <a href="profil.html" class="link">Votre compte</a>
             <a href="home.html" class="link">Les messages postés</a>
             <a href="login.html" class="link" id="disconnect">Se déconnecter</a>
         </nav>
     </header>
 
-    <main class="main-profil">
-        <h1>Votre compte</h1>
-        <section>
-            <div id="name">Prénom nom</div>
-            <div id="email">email</div>
-            <div id="messages">Vous avez posté 50 messages</div>
-        </section>
-        <section>
-            <h2>Suppression du compte</h2>
-            <p>
-                Vous pouvez supprimer votre compte.<br/>
-                Attention si vous le supprimez, vos données de connexion seront perdues ainsi que chacun des messages que vous avez postés!
-            </p>
-            <input type="button" value="supprimer mon compte" id="delete"/>
-        </section>
+    <main class="main-form">
+        <form method="POST" action="">
+
+            <fieldset>
+                <legend>Veuillez remplir tous les champs</legend>
+                
+                <label for="content">Votre message</label>
+                <textarea id="content" placeholder="Ecrivez ici votre message" rows="8" cols="23" required></textarea>
+            
+                <label for="file">Vous pouvez ajouter un fichier</label>
+                <input type="file" name="file" id="file"/> 
+            
+            
+            </fieldset>
+            
+            <input type="submit" value="Poster" id="Button-login"/>
+
+        </form>
     </main>
 
     <footer>
@@ -43,6 +46,6 @@
 
     <!-- Javascript -->
     <script src="../javascipt/apiRoutes.js"></script>
-    <script src="../javascipt/profil.js"></script>
+    <script src="../javascipt/createMessage.js"></script>
 </body>
 </html>

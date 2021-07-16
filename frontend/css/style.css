@@ -50,7 +50,7 @@ footer {
 .main-form form {
   background-color: #ffd7d7;
   padding: 10px;
-  width: 280px;
+  width: 300px;
 }
 .main-form fieldset {
   padding: 0 20px 20px 20px;
@@ -89,6 +89,9 @@ footer {
   color: black;
   background-color: white;
   text-decoration: none;
+}
+.main-form #file {
+  width: 250px;
 }
 
 .link {

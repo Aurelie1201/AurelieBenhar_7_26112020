@@ -4,11 +4,12 @@ if(!sessionStorage.token){
 }
 
 const deleteButton = document.getElementById("delete");
+const userId = sessionStorage.userId;
 
 /**
  * affichage des données de l'utilisateur
  */
-fetch(apiRoute("getOneUser")+sessionStorage.userId, {
+fetch(apiRoute("getOneUser")+userId, {
     method: "GET",
     headers:{ Accept: "application/json", Authorization: "Bearer "+sessionStorage.token}
 })
@@ -27,9 +28,10 @@ fetch(apiRoute("getOneUser")+sessionStorage.userId, {
     .catch(error =>{console.log(error)});
 
 deleteButton.onclick = () =>{
-    fetch(apiRoute("getOneUser")+sessionStorage.userId, {
+    fetch(apiRoute("getOneUser")+userId, {
         method: "DELETE",
-        headers:{ Accept: "application/json", Authorization: "Bearer "+sessionStorage.token}
+        headers:{ Accept: "application/json", Authorization: "Bearer "+sessionStorage.token},
+        body: userId
     })
         .then(response =>{
             alert("Votre compte a bien été supprimé");

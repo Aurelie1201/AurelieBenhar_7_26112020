@@ -4,9 +4,9 @@
     margin-top: 50px;
     margin-bottom: 50px;
     & form{
-        background-color:$color-logo;
-        padding:10px;
-        width:280px;
+        background-color: $color-logo;
+        padding: 10px;
+        width: 300px;
     };
     & fieldset{
         padding: 0 20px 20px 20px;
@@ -45,5 +45,8 @@
         color: black;
         background-color: white;
         text-decoration: none;
+    };
+    #file{
+        width: 250px;
     };
 };
