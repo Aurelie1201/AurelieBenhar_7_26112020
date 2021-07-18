@@ -148,4 +148,47 @@ footer {
   }
 }
 
+.main-home {
+  margin: auto;
+}
+.main-home h1 {
+  text-align: center;
+}
+.main-home .wall {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
+}
+.main-home .wall a {
+  text-decoration: none;
+  color: black;
+}
+.main-home .wall__message {
+  display: flex;
+  justify-content: space-between;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
+  width: 90%;
+  border: solid #ffd7d7 4px;
+  border-radius: 25px;
+  padding: 10px;
+}
+.main-home .wall__message--content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 60%;
+}
+.main-home .wall__message--content h2 {
+  text-align: center;
+}
+.main-home .wall__message img {
+  width: 35%;
+  height: 100%;
+  border: solid #ffd7d7 4px;
+  border-radius: 25px;
+}
+
 /*# sourceMappingURL=style.css.map */

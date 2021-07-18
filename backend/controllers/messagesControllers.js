@@ -30,7 +30,7 @@ exports.getOneMessage = (req, res) =>{
 };
 
 exports.getAllMessages = (req, res) =>{
-    models.Message.findAll({ attributes: ['title', 'content', 'attachment', 'likes'], order: [['id', 'ASC']]})
+    models.Message.findAll({ order: [['id', 'ASC']]})
         .then(messages => res.status(200).json(messages))
         .catch(error => res.status(500).json({error}));
 };
