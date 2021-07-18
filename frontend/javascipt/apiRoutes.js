@@ -8,3 +8,26 @@ const apiRoute = (route) =>{
     }
     return api[route];
 };
+
+const getName = async (userId)=>{
+    const getUser = await fetch(apiRoute("getOneUser")+userId, { 
+        method: "GET", 
+        headers:{ Accept: "application/json", Authorization: "Bearer "+sessionStorage.token}
+    });
+    const user = await getUser.json();
+    const firstName = user.firstName;
+    const lastName = user.lastName;
+    const name = firstName +" "+ lastName;
+    return name;
+};
+
+const getNbComments = async (messageId) =>{
+    const NbComments = await fetch(apiRoute("comment")+messageId, {
+        method: "GET",
+        headers: { Accept: "application/json", Authorization: "Bearer "+sessionStorage.token }
+    });
+    const comments = await NbComments.json();
+    const countComments = comments.count;
+    console.log(comments);
+    return countComments;
+};
