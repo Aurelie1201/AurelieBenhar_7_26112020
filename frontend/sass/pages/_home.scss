@@ -11,7 +11,7 @@
         & a{
             text-decoration: none;
             color: black;
-        }
+        };
         &__message{
             display: flex;
             justify-content: space-between;
@@ -29,14 +29,20 @@
                 width: 60%;
                 & h2{
                     text-align: center;
-                }
-            }
+                    margin: auto;
+                };
+            };
+            &--addCom{
+                width: 85px;
+                background-color: $color-logo;
+                border-radius: 5px;
+            };
             & img{
                 width: 35%;
                 height: 100%;
                 border: solid $color-logo 4px;
                 border-radius: 25px;
-            }
-        }
-    }
-}
+            };
+        };
+    };
+};

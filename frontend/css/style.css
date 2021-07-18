@@ -183,6 +183,12 @@ footer {
 }
 .main-home .wall__message--content h2 {
   text-align: center;
+  margin: auto;
+}
+.main-home .wall__message--addCom {
+  width: 85px;
+  background-color: #ffd7d7;
+  border-radius: 5px;
 }
 .main-home .wall__message img {
   width: 35%;

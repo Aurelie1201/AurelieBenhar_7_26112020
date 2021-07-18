@@ -29,21 +29,24 @@ const allMessages = async ()=>{
         let name = await getName(allMessages[i].userId);
         let nbComments = await getNbComments(messageId);
         let writeComments = "";
+        let link = "";
         
         if(nbComments === 0){
             writeComments = "aucun commentaire";
         } else{
             writeComments += nbComments +" commentaires";
-        }
+            link = '<a href="message.html?id='+ messageId +'">Voir les commentaires</a>';
+        };
         if(!url){
             url = "../assetts/icon.png";
-        }
-        wall.innerHTML += '<a href="message.html?id='+ messageId +'"><div class="wall__message"><div class="wall__message--content">' +
+        };
+        wall.innerHTML += '<div class="wall__message"><div class="wall__message--content">' +
                         '<h2>'+ title +'</h2>' +
                         '<p>'+ content +'</p>' +
-                        '<span>Posté par '+ name + ', '+ writeComments +'</span></div>'+
-                        '<img src="'+ url +'" alt="image du message"/></div></a>';
-    }
+                        '<span>Posté par '+ name + ', '+ writeComments +'</span>'+ 
+                        link +'<button class="wall__message--addCom">Commentez</button></div>'+
+                        '<img src="'+ url +'" alt="image du message"/></div>';
+    };
 };
 
 allMessages();
