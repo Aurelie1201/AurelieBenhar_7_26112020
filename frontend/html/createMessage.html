@@ -21,21 +21,24 @@
     </header>
 
     <main class="main-form">
-        <form method="POST" action="">
+        <form method="POST" action="" enctype="multipart/form-data">
 
             <fieldset>
                 <legend>Veuillez remplir tous les champs</legend>
+                
+                <label for="title">Le titre de votre message</label>
+                <input type="text" id="title" placeholder="Votre titre" required>
                 
                 <label for="content">Votre message</label>
                 <textarea id="content" placeholder="Ecrivez ici votre message" rows="8" cols="23" required></textarea>
             
                 <label for="file">Vous pouvez ajouter un fichier</label>
-                <input type="file" name="file" id="file"/> 
+                <input type="file" name="file" id="file" accept="image/png, image/jpeg"/> 
             
             
             </fieldset>
             
-            <input type="submit" value="Poster" id="Button-login"/>
+            <input type="submit" value="Poster" id="buttonPost"/>
 
         </form>
     </main>

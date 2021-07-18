@@ -2,15 +2,17 @@ const { mode } = require('crypto-js');
 const models = require('../models');
 
 exports.createMessage  = (req, res) =>{
-    const title = req.body.title;
-    const content = req.body.content;
-    const userId = req.body.userId;
-
+    const message = JSON.parse(req.body.message)
+    const title = message.title;
+    const content = message.content;
+    const userId = message.userId;
+    
+    const attachment = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
     if(title == null || content == null){
         return res.status(400).json({ message: "Parameters missing"});
     }
     console.log(userId);
-    models.Message.create({ title: title, content: content, likes: 0, UserId: userId})
+    models.Message.create({ title: title, content: content, likes: 0, UserId: userId, attachment: attachment})
         .then(newMessage =>{
             res.status(200).json(newMessage);
         })
