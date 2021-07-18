@@ -1,0 +1,30 @@
+.main-message{
+    & h1{
+        text-align: center;
+    };
+    & .message{
+        display: flex;
+        justify-content: space-between;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 15px;
+        width: 90%;
+        border: solid $color-logo 4px;
+        border-radius: 25px;
+        padding: 10px;
+        &--content{
+            display: flex;
+            flex-direction: column;
+            width: 60%;
+            & h2{
+                text-align: center;
+            };
+        };
+        & img{
+            width: 35%;
+            height: 100%;
+            border: solid $color-logo 4px;
+            border-radius: 25px;
+        };
+    };
+};

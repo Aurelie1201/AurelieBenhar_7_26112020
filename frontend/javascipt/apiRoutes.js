@@ -31,3 +31,13 @@ const getNbComments = async (messageId) =>{
     console.log(comments);
     return countComments;
 };
+
+const getAllComments = async (messageId) =>{
+    const NbComments = await fetch(apiRoute("comment")+messageId, {
+        method: "GET",
+        headers: { Accept: "application/json", Authorization: "Bearer "+sessionStorage.token }
+    });
+    const allcomments = await NbComments.json();
+    const comments = allcomments.rows;
+    return comments;
+};

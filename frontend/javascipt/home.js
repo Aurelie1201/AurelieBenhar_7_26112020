@@ -42,7 +42,7 @@ const allMessages = async ()=>{
                         '<h2>'+ title +'</h2>' +
                         '<p>'+ content +'</p>' +
                         '<span>Posté par '+ name + ', '+ writeComments +'</span></div>'+
-                        '<img src="'+ url +'" alt="groupomania"/></div></a>';
+                        '<img src="'+ url +'" alt="image du message"/></div></a>';
     }
 };
 
