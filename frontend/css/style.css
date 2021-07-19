@@ -306,4 +306,17 @@ footer {
   border-color: #c96161;
 }
 
+.main-comment {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.main-comment button {
+  margin-top: 25px;
+  margin-bottom: 25px;
+  padding: 10px;
+  background-color: #ffd7d7;
+  border-color: #c96161;
+}
+
 /*# sourceMappingURL=style.css.map */

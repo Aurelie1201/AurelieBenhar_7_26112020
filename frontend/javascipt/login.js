@@ -20,6 +20,7 @@ form.addEventListener('submit', (event=>{
             if(response.token){
                 sessionStorage.setItem("userId", response.userId);
                 sessionStorage.setItem("token", response.token);
+                sessionStorage.setItem("isAdmin", response.isAdmin);
                 window.location.href = "home.html";
             } else{
                 switch (response.message){

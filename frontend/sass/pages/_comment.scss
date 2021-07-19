@@ -1,0 +1,12 @@
+.main-comment{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    & button{
+        margin-top: 25px;
+        margin-bottom: 25px;
+        padding: 10px;
+        background-color: $color-logo;
+        border-color: #c96161;
+    }
+};

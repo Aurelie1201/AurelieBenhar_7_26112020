@@ -1,4 +1,5 @@
 const models = require('../models');
+const jwt = require('jsonwebtoken');
 
 exports.createcomment  = (req, res) =>{
     // const comment = req.body.comment;
@@ -21,6 +22,16 @@ exports.getAllComments = (req, res) =>{
     
     models.Comment.findAndCountAll({where : {'messageId': messageId}})
         .then(comments => res.status(200).json(comments))
+        .catch(error => res.status(500).json({error}));
+};
+
+exports.getOneComments = (req, res) =>{
+    const commentId = req.params.commentId;
+
+    models.Comment.findOne({where: {id: commentId}})
+        .then(message =>{
+            res.status(200).json(message);
+        })
         .catch(error => res.status(500).json({error}));
 };
 

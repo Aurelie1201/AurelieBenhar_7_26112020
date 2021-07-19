@@ -57,22 +57,33 @@ const oneMessage = async ()=>{
 };
 
 const getComments = async ()=>{
-    const getComments = await fetch(apiRoute("comment")+id, {
+    const allComments = await fetch(apiRoute("comment")+id, {
         method: "GET", 
         headers:{ Accept: "application/json", Authorization: "Bearer "+sessionStorage.token} 
     });
 
-    const comments = await getComments.json();
+    const allOfComments = await allComments.json();
+    const comments = allOfComments.rows;
     const divComments = document.getElementsByClassName("allComments")[0];
     let writeHtml = "";
-
+    console.log("coucou "+comments);
     for(i = 0; i < comments.length; i++){
+        
         let userId = comments[i].userId;
         let content = comments[i].content;
         let date = new Date(comments[i].createdAt).toLocaleDateString('fr-FR', { year: "numeric", month: "long", day: "numeric" });
         let name = await getName(userId);
-
-        writeHtml += writeMessage(content, name, date);
+        
+        if(userId == sessionStorage.userId || sessionStorage.isAdmin == "true"){
+            writeHtml += '<div class="oneComment">'+
+                        '<div>'+ content +'</div>'+
+                        '<span>Posté par '+ name +' le '+ date +'</span>'+
+                        '<a href="comment.html?id='+ comments[i].id +'">Supprimer votre commentaire</a></div>';
+        } else{
+            writeHtml += '<div class="oneComment">'+
+                    '<div>'+ content +'</div>'+
+                    '<span>Posté par '+ name +' le '+ date +'</span></div>';
+        };
     };
 
     writeHtml += '<form id="formComment">'+
@@ -99,19 +110,10 @@ const getComments = async ()=>{
                     location.reload();
                 } else{
                     alert("Une erreur est survenue");
-                    console.log(response.message);
                 };
             })
             .catch(error => console.log(error));
     };
-};
-
-
-
-const writeMessage = (content, name, date) =>{
-    return '<div class="oneComment">'+
-            '<div>'+ content +'</div>'+
-            '<span>Posté par '+ name +' le '+ date +'</span></div>';
 };
 
 oneMessage();
