@@ -43,6 +43,10 @@
                     overflow: hidden;
                     white-space: nowrap;
                 };
+                & span{
+                    font-size: small;
+                    font-style: italic;
+                };
             };
             &--addCom{
                 width: 150px;

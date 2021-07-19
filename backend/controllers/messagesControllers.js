@@ -4,12 +4,23 @@ const fileSystem = require('fs');
 const jwt = require('jsonwebtoken');
 
 exports.createMessage  = (req, res) =>{
-    const message = JSON.parse(req.body.message)
-    const title = message.title;
-    const content = message.content;
-    const userId = message.userId;
+    let title, content, userId, attachment;
+    if(!req.file){
+        title = req.body.title;
+        content = req.body.content;
+        userId = req.body.userId;
+        attachment = null;
+    } else{
+        const message = JSON.parse(req.body.message)
+        title = message.title;
+        content = message.content;
+        userId = message.userId;
+        attachment = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+    }
     
-    const attachment = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+    
+    // console.log("message "+message);
+    
     if(title == null || content == null){
         return res.status(400).json({ message: "Parameters missing"});
     }

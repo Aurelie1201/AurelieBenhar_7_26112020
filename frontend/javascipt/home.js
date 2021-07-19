@@ -19,7 +19,7 @@ const allMessages = async ()=>{
     });
     
     const allMessages = await getAllMessages.json();
-    
+
     for(let i=0; i < allMessages.length; i++){
         let title = allMessages[i].title;
         let content = allMessages[i].content;
@@ -28,13 +28,12 @@ const allMessages = async ()=>{
         let name = await getName(allMessages[i].userId);
         let nbComments = await getNbComments(messageId);
         let writeComments = "";
-        // let link = "";
+        let date = new Date(allMessages[i].createdAt).toLocaleDateString('fr-FR', { year: "numeric", month: "long", day: "numeric" });
         
         if(nbComments === 0){
             writeComments = "aucun commentaire";
         } else{
             writeComments += nbComments +" commentaires";
-            // link = '<a href="message.html?id='+ messageId +'">Voir plus et commenter</a>';
         };
         if(!url){
             url = "../assetts/icon.png";
@@ -42,7 +41,7 @@ const allMessages = async ()=>{
         wall.innerHTML += '<div class="wall__message"><div class="wall__message--content">' +
                         '<h2>'+ title +'</h2>' +
                         '<p>'+ content +'</p>' +
-                        '<span>Posté par '+ name + ', '+ writeComments +'</span>'+
+                        '<span>Posté par '+ name + ', le '+ date +', '+ writeComments +'</span>'+
                         '<a href="message.html?id='+ messageId +'" class="wall__message--addCom">Voir plus et commenter</a></div>'+
                         '<img src="'+ url +'" alt="image du message"/></div>';
     };

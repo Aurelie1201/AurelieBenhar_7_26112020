@@ -1,16 +1,17 @@
 const models = require('../models');
 
 exports.createcomment  = (req, res) =>{
+    // const comment = req.body.comment;
     const content = req.body.content;
     const userId = req.body.userId;
     const messageId = req.body.messageId;
-
+    console.log("coucou "+content);
     if(content == null){
         return res.status(400).json({ message: "Parameters missing"});
     }
     models.Comment.create({ content: content, userId: userId, MessageId: messageId})
         .then(newComment =>{
-            res.status(200).json(newComment);
+            res.status(200).json({message: "comment created"});
         })
         .catch(error => res.status(500).json({error}));
 };
@@ -25,11 +26,14 @@ exports.getAllComments = (req, res) =>{
 
 exports.deleteComment = (req, res) =>{
     const id = req.params.id;
-    const userId = req.body.userId;
+    const token = req.headers.authorization;
+    const decodedToken = jwt.decode(token.split(" ")[1]);
+    const userId = decodedToken.userId;
+    const admin = decodedToken.isAdmin;
 
     models.Comment.findOne({where: {id: id}})
         .then(comment =>{
-            if(userId != comment.userId){
+            if(userId != comment.userId && !admin){
                 res.status(401).json({message: "Unauthorized to delete this message"});
             } else{
                 comment.destroy();

@@ -28,7 +28,7 @@ form.addEventListener('submit', (event=>{
    
     fetch(apiRoute("message"), {
         method: "POST", 
-        headers:{ Accept: "application/json", Authorization: "Bearer "+sessionStorage.token},
+        headers:{ "Content-Type": "application/json", Authorization: "Bearer "+sessionStorage.token},
         body: message
     })
         .then(response =>{

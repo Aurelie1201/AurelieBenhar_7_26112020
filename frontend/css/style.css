@@ -201,6 +201,10 @@ footer {
   overflow: hidden;
   white-space: nowrap;
 }
+.main-home .wall__message--content span {
+  font-size: small;
+  font-style: italic;
+}
 .main-home .wall__message--addCom {
   width: 150px;
   background-color: #ffd7d7;
@@ -264,6 +268,42 @@ footer {
   font-size: large;
   background-color: white;
   text-decoration: none;
+}
+.main-message .allComments {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.main-message .allComments .oneComment {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  border: solid #c96161;
+  border-radius: 10px;
+  align-items: center;
+  background-color: #ffd7d7;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+.main-message .allComments .oneComment span {
+  font-size: medium;
+  font-style: italic;
+}
+.main-message .allComments form {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 80%;
+}
+.main-message .allComments form textarea {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.main-message .allComments form input {
+  margin: auto;
+  background-color: #ffd7d7;
+  border-color: #c96161;
 }
 
 /*# sourceMappingURL=style.css.map */
