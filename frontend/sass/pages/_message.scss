@@ -1,4 +1,6 @@
 .main-message{
+    display: flex;
+    flex-direction: column;
     & h1{
         text-align: center;
     };
@@ -12,6 +14,7 @@
         border: solid $color-logo 4px;
         border-radius: 25px;
         padding: 10px;
+        margin-top: 20px;
         &--content{
             display: flex;
             flex-direction: column;
@@ -26,5 +29,16 @@
             border: solid $color-logo 4px;
             border-radius: 25px;
         };
+    };
+    & .btnDelete{
+        margin: auto;
+        padding: 5px;
+        border: 1px solid #0D7D69;
+        box-shadow: 1px 1px 1px #0D7D69;
+        border-radius: 5px;
+        color: black;
+        font-size: large;
+        background-color: white;
+        text-decoration: none;
     };
 };

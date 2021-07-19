@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const CryptoJs = require('crypto-js');
+const fileSystem = require('fs');
 const key = CryptoJs.enc.Hex.parse(process.env.CRYPTO_KEY);
 const iv = CryptoJs.enc.Hex.parse(process.env.CRYPTO_IV);
 
@@ -106,24 +107,36 @@ exports.getUser = (req, res) =>{
 
 exports.deleteUser = (req, res) =>{
     const userId = req.params.id;
+    const token = req.headers.authorization;
+    const decodedToken = jwt.decode(token.split(" ")[1]);
+    const userIdToken = decodedToken.userId;
+    const admin = decodedToken.isAdmin;
 
-    models.User.findOne({where: {id: userId}})
-        .then(user =>{
-                models.Message.findAll({ where: {userId: userId}})
-                    .then(messages =>{
-                        for (let message of messages){
-                            models.Comment.destroy({ where: {messageId: message.id}});
-                        }
-                        models.Message.destroy({where: {userId: userId}})
-                            .then(destroy =>{
-                                user.destroy();
-                                res.status(200).json({message: "User deleted"});
-                            })
-                            .catch(error => res.status(500).json({error}));
-                    })
-                    .catch(error => res.status(500).json({error}));
-        })
-        .catch(error => res.status(500).json({error}));
+    if(!admin && userId !=userIdToken){
+        res.status(401).json({message: "Unauthorized to delete this user"});
+    } else{
+        models.User.findOne({where: {id: userId}})
+            .then(user =>{
+                    models.Message.findAll({ where: {userId: userId}})
+                        .then(messages =>{
+                            for (let message of messages){
+                                console.log('1');
+                                let filename = message.attachment.split('/images/')[1];
+                                fileSystem.unlink(`images/${filename}`, () =>{
+                                    models.Comment.destroy({where: {messageId: message.id}});
+                                })
+                            }
+                            models.Message.destroy({where: {userId: userId}})
+                                .then(destroy =>{
+                                    user.destroy();
+                                    res.status(200).json({message: "User deleted"});
+                                })
+                                .catch(error => res.status(500).json({error}));
+                        })
+                        .catch(error => res.status(500).json({error}));
+            })
+            .catch(error => res.status(500).json({error}));
+        };
 }
 
 // models.Message.destroy({where: {userId: userId}})

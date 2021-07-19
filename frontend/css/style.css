@@ -175,20 +175,39 @@ footer {
   border-radius: 25px;
   padding: 10px;
 }
+@media (max-width: 499px) {
+  .main-home .wall__message {
+    flex-direction: column;
+    align-items: center;
+  }
+}
 .main-home .wall__message--content {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   width: 60%;
 }
+@media (max-width: 499px) {
+  .main-home .wall__message--content {
+    width: 100%;
+  }
+}
 .main-home .wall__message--content h2 {
   text-align: center;
   margin: auto;
 }
+.main-home .wall__message--content p {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
 .main-home .wall__message--addCom {
-  width: 85px;
+  width: 150px;
   background-color: #ffd7d7;
+  border: solid #c96161;
   border-radius: 5px;
+  margin: 12px;
+  padding: 5px;
 }
 .main-home .wall__message img {
   width: 35%;
@@ -196,7 +215,16 @@ footer {
   border: solid #ffd7d7 4px;
   border-radius: 25px;
 }
+@media (max-width: 499px) {
+  .main-home .wall__message img {
+    width: 30%;
+  }
+}
 
+.main-message {
+  display: flex;
+  flex-direction: column;
+}
 .main-message h1 {
   text-align: center;
 }
@@ -210,6 +238,7 @@ footer {
   border: solid #ffd7d7 4px;
   border-radius: 25px;
   padding: 10px;
+  margin-top: 20px;
 }
 .main-message .message--content {
   display: flex;
@@ -224,6 +253,17 @@ footer {
   height: 100%;
   border: solid #ffd7d7 4px;
   border-radius: 25px;
+}
+.main-message .btnDelete {
+  margin: auto;
+  padding: 5px;
+  border: 1px solid #0D7D69;
+  box-shadow: 1px 1px 1px #0D7D69;
+  border-radius: 5px;
+  color: black;
+  font-size: large;
+  background-color: white;
+  text-decoration: none;
 }
 
 /*# sourceMappingURL=style.css.map */

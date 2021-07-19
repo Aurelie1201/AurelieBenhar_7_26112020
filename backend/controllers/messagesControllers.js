@@ -1,5 +1,7 @@
 const { mode } = require('crypto-js');
 const models = require('../models');
+const fileSystem = require('fs');
+const jwt = require('jsonwebtoken');
 
 exports.createMessage  = (req, res) =>{
     const message = JSON.parse(req.body.message)
@@ -37,19 +39,25 @@ exports.getAllMessages = (req, res) =>{
 
 exports.deleteMessage = (req, res) =>{
     const id = req.params.id;
-    const userId = req.body.userId;
+    const token = req.headers.authorization;
+    const decodedToken = jwt.decode(token.split(" ")[1]);
+    const userId = decodedToken.userId;
+    const admin = decodedToken.isAdmin;
 
     models.Message.findOne({where: {id: id}})
         .then(message =>{
-            if(userId != message.userId){
+            if(userId != message.userId && !admin){
                 res.status(401).json({message: "Unauthorized to delete this message"});
             } else{
-                models.Comment.destroy({where: {messageId: id}})
-                    .then(destroy =>{
-                        message.destroy();
-                        res.status(200).json({message: "Message deleted"});
+                const filename = message.attachment.split('/images/')[1];
+                fileSystem.unlink(`images/${filename}`, () =>{
+                    models.Comment.destroy({where: {messageId: id}})
+                        .then(destroy =>{
+                            message.destroy();
+                            res.status(200).json({message: "Message deleted"});
+                        })
+                        .catch(error => res.status(500).json({error}));
                     })
-                    .catch(error => res.status(500).json({error}));
             };
         })
         .catch(error => res.status(500).json({error}));
