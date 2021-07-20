@@ -12,6 +12,9 @@ const wall = document.getElementsByClassName("wall")[0];
  */
 btnDisconnection.onclick = ()=>{ sessionStorage.clear()};
 
+/**
+ * get all messages
+ */
 const allMessages = async ()=>{
     const getAllMessages = await fetch(apiRoute("message"), {
         method: "GET", 

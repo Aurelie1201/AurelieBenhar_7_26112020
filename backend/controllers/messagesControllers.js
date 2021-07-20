@@ -3,9 +3,15 @@ const models = require('../models');
 const fileSystem = require('fs');
 const jwt = require('jsonwebtoken');
 
+/**
+ * Creat a message
+ * @param {Object} req 
+ * @param {Object} res 
+ * @returns 
+ */
 exports.createMessage  = (req, res) =>{
-    let message, title, content, userId;
-    let attachment;
+    let message, title, content, userId, attachment;
+
     if(req.file){
         message = JSON.parse(req.body.message)
         title = message.title;
@@ -31,6 +37,12 @@ exports.createMessage  = (req, res) =>{
         .catch(error => res.status(500).json({error}));
 };
 
+/**
+ * Get one message
+ * @param {Object} req 
+ * @param {Object} res 
+ * @returns 
+ */
 exports.getOneMessage = (req, res) =>{
     const idMessage = req.params.id;
 
@@ -41,12 +53,24 @@ exports.getOneMessage = (req, res) =>{
         .catch(error => res.status(500).json({error}));
 };
 
+/**
+ * Get all messages
+ * @param {Object} req 
+ * @param {Object} res 
+ * @returns 
+ */
 exports.getAllMessages = (req, res) =>{
-    models.Message.findAll({ order: [['id', 'ASC']]})
+    models.Message.findAll({ order: [['id', 'DESC']]})
         .then(messages => res.status(200).json(messages))
         .catch(error => res.status(500).json({error}));
 };
 
+/**
+ * Delete a message
+ * @param {Object} req 
+ * @param {Object} res 
+ * @returns 
+ */
 exports.deleteMessage = (req, res) =>{
     const id = req.params.id;
     const token = req.headers.authorization;

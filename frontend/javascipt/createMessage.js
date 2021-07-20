@@ -6,6 +6,9 @@ if(!sessionStorage.token){
 const userId = sessionStorage.userId;
 const form = document.getElementsByTagName('form')[0];
 
+/**
+ * Form to post a message
+ */
 form.addEventListener('submit', (event=>{
     const title = document.getElementById("title").value;
     const content = document.getElementById("content").value;
@@ -23,7 +26,6 @@ form.addEventListener('submit', (event=>{
         }));
         message = formData;
         header = { Accept: "application/json",  Authorization: "Bearer "+sessionStorage.token}
-        // message = {title: title, content: content, userId: userId, file: file};
     } else{
         message = JSON.stringify( {title: title, content: content, userId: userId} );
         header = { "Content-Type": "application/json",  Authorization: "Bearer "+sessionStorage.token}

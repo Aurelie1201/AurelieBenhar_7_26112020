@@ -2,7 +2,7 @@ const http = require('http');
 const app = require('./app');
 
 /**
- * Renvoi un port valide qu'il soit fourni sous la forme d'un numéro ou d'une chaîne
+ * Return a valid port whether given as a number or a string
  * @param {*} val 
  * @returns port
  */
@@ -22,8 +22,8 @@ const port = normalizePort(process.env.PORT || '8080');
 app.set('port', port);
 
 /**
- * Recherche les différentes erreurs et les gère de manière appropriée
- * Elle est ensuite enregistrée dans le serveur
+ * Find different errors and deal with them appropriately
+ * It is then saved in the server
  * @param {*} error 
  */
 const errorHandler = error =>{
@@ -49,7 +49,7 @@ const errorHandler = error =>{
 const server = http.createServer(app);
 
 /**
- * consigne le port ou le canal nommé sur lequel le serveur s'éxécute dans la console.
+ * logs the port the server is running on
  */
  server.on('error', errorHandler);
  server.on('listening', () =>{

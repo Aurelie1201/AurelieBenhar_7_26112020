@@ -9,6 +9,11 @@ const apiRoute = (route) =>{
     return api[route];
 };
 
+/**
+ * Get user ID and return his name
+ * @param {Number} userId 
+ * @returns String
+ */
 const getName = async (userId)=>{
     const getUser = await fetch(apiRoute("getOneUser")+userId, { 
         method: "GET", 
@@ -21,6 +26,11 @@ const getName = async (userId)=>{
     return name;
 };
 
+/**
+ * Get a message Id and return number of comments it has
+ * @param {Number} messageId 
+ * @returns Number
+ */
 const getNbComments = async (messageId) =>{
     const NbComments = await fetch(apiRoute("comment")+messageId, {
         method: "GET",
@@ -32,6 +42,11 @@ const getNbComments = async (messageId) =>{
     return countComments;
 };
 
+/**
+ * Get message ID, return all its comments
+ * @param {Number} messageId 
+ * @returns Array
+ */
 const getAllComments = async (messageId) =>{
     const NbComments = await fetch(apiRoute("comment")+messageId, {
         method: "GET",

@@ -8,7 +8,7 @@ const deleteButton = document.getElementById("delete");
 const userId = sessionStorage.userId;
 
 /**
- * affichage des données de l'utilisateur
+ * get datas of a user
  */
 fetch(apiRoute("getOneUser")+userId, {
     method: "GET",
@@ -18,16 +18,21 @@ fetch(apiRoute("getOneUser")+userId, {
     .then(response => {
         const firstName = response.firstName;
         const lastName = response.lastName;
+        const email = response.email;
         const numberOfMessages = response.messagesCount;
         let plural = "";
         if(numberOfMessages > 1){
             plural = "s";
         }
         document.getElementById("name").innerHTML = firstName + " " + lastName;
+        document.getElementById("email").innerHTML = email;
         document.getElementById("messages").innerHTML = "Vous avez posté " + numberOfMessages + " message" + plural;
     })
     .catch(error =>{console.log(error)});
 
+/**
+ * Function to delete a user
+ */
 deleteButton.onclick = () =>{
     fetch(apiRoute("getOneUser")+userId, {
         method: "DELETE",
@@ -46,6 +51,9 @@ deleteButton.onclick = () =>{
         .catch(error =>{console.log(error)});
 };
 
+/**
+ * Function to modify password
+ */
 modifyButton.onclick = () =>{
     const newPassword = document.getElementById("password").value;
     fetch(apiRoute("getOneUser")+userId, {

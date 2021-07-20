@@ -2,6 +2,9 @@ console.log(apiRoute("signup"));
 
 const form = document.getElementsByTagName('form')[0];
 
+/**
+ * form to signup
+ */
 form.addEventListener('submit', (event=>{
     const firstName = document.getElementById("prenom").value;
     const lastName = document.getElementById("nom").value;

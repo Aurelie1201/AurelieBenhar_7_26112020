@@ -1,12 +1,17 @@
 const models = require('../models');
 const jwt = require('jsonwebtoken');
 
+/**
+ * Creat a comment
+ * @param {Object} req 
+ * @param {Object} res 
+ * @returns 
+ */
 exports.createcomment  = (req, res) =>{
-    // const comment = req.body.comment;
     const content = req.body.content;
     const userId = req.body.userId;
     const messageId = req.body.messageId;
-    console.log("coucou "+content);
+    
     if(content == null){
         return res.status(400).json({ message: "Parameters missing"});
     }
@@ -17,6 +22,12 @@ exports.createcomment  = (req, res) =>{
         .catch(error => res.status(500).json({error}));
 };
 
+/**
+ * Get all comments from a message
+ * @param {Object} req 
+ * @param {Object} res 
+ * @returns 
+ */
 exports.getAllComments = (req, res) =>{
     const messageId = req.params.id;
     
@@ -25,6 +36,12 @@ exports.getAllComments = (req, res) =>{
         .catch(error => res.status(500).json({error}));
 };
 
+/**
+ * Get one comment
+ * @param {Object} req 
+ * @param {Object} res 
+ * @returns 
+ */
 exports.getOneComments = (req, res) =>{
     const commentId = req.params.commentId;
 
@@ -35,6 +52,12 @@ exports.getOneComments = (req, res) =>{
         .catch(error => res.status(500).json({error}));
 };
 
+/**
+ * Delete a comment
+ * @param {Object} req 
+ * @param {Object} res 
+ * @returns 
+ */
 exports.deleteComment = (req, res) =>{
     const id = req.params.id;
     const token = req.headers.authorization;

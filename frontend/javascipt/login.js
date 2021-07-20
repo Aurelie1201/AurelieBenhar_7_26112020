@@ -1,6 +1,9 @@
 sessionStorage.clear();
 const form = document.getElementsByTagName('form')[0];
 
+/**
+ * Form to login
+ */
 form.addEventListener('submit', (event=>{
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
@@ -24,7 +27,7 @@ form.addEventListener('submit', (event=>{
                 window.location.href = "home.html";
             } else{
                 switch (response.message){
-                    case "wrong password": alert("Mote de passe incorrect");
+                    case "wrong password": alert("Mot de passe incorrect");
                     break;
                     case "user do not exists": alert("Aucun utilisateur correspond à cette adresse mail");
                     break;
@@ -39,7 +42,7 @@ form.addEventListener('submit', (event=>{
 }));
 
 /**
- * Vérification d'un mail d'une apparence valide
+ * Check an email with a valid appearance
  * @param {String} mail 
  * @returns {Boolean}
  */
@@ -50,8 +53,8 @@ form.addEventListener('submit', (event=>{
 };
 
 /**
- * Vérification d'un mot de passe contenant au moins 8 caractères
- * et contenant des chiffres, des lettres et seulement ._- comme caractères spéciaux
+ *Checking a password containing at least 8 characters
+ * and containing numbers, letters and only ._- as special characters
  * @param {String} password 
  * @returns {Boolean}
  */

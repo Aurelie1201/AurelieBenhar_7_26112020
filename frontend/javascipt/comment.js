@@ -13,6 +13,10 @@ document.getElementsByClassName("btnDelete")[0].onclick = () => {
     deleteComment(id);
 };
 
+/**
+ * Delete a comment
+ * @param {Number} commentId 
+ */
 const deleteComment = async (commentId) =>{
     const dltComment = await fetch(apiRoute("comment")+commentId, { method: "DELETE", headers: { Accept: "application/json", Authorization: "Bearer "+sessionStorage.token}});
     const response = await dltComment.json();

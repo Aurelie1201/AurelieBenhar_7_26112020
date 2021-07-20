@@ -5,6 +5,9 @@ if(!sessionStorage.token){
 const Url = new URL(window.location.href);
 const id = Url.searchParams.get("id");
 
+/**
+ * get a message
+ */
 const oneMessage = async ()=>{
     const getOneMessage = await fetch(apiRoute("message")+id, {
         method: "GET", 
@@ -56,6 +59,9 @@ const oneMessage = async ()=>{
     };
 };
 
+/**
+ * get all comments of a message
+ */
 const getComments = async ()=>{
     const allComments = await fetch(apiRoute("comment")+id, {
         method: "GET", 

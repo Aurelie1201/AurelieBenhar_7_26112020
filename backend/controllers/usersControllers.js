@@ -1,21 +1,21 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const CryptoJs = require('crypto-js');
 const fileSystem = require('fs');
-const key = CryptoJs.enc.Hex.parse(process.env.CRYPTO_KEY);
-const iv = CryptoJs.enc.Hex.parse(process.env.CRYPTO_IV);
 
 const models = require('../models');
 
+/**
+ * Create a user
+ * @param {Object} req 
+ * @param {Object} res 
+ * @returns 
+ */
 exports.signup = (req, res) =>{
     const email = req.body.email;
     const password = req.body.password;
     const lastName = req.body.lastName;
     const firstName = req.body.firstName;
-    const cryptMail = CryptoJs.AES.encrypt(req.body.email, key, {iv: iv}).toString();
 
-    console.log("email : " + email);
-    console.log("password : " + password);
     if(email == null || password == null || lastName == null || firstName == null){
         return res.status(400).json({message: 'missing parameters'});
     } else if (!testMail(email)){
@@ -25,13 +25,13 @@ exports.signup = (req, res) =>{
     } else if(!testMot(lastName) || !testMot(firstName)){
         return res.status(400).json({message: "word invalid"})
     } else {
-        models.User.findOne({where: { email: cryptMail } })
+        models.User.findOne({where: { email: email } })
         .then( userFound =>{
             if (!userFound){
                 bcrypt.hash(req.body.password, 10)
                     .then(hash => {
                         const user = models.User.create({
-                                        email: cryptMail, 
+                                        email: email, 
                                         password: hash, 
                                         lastName: lastName, 
                                         firstName: firstName, 
@@ -49,16 +49,21 @@ exports.signup = (req, res) =>{
     };
 };
 
+/**
+ * Send a token to user who is logged in
+ * @param {Object} req 
+ * @param {Object} res 
+ * @returns 
+ */
 exports.login = (req, res) =>{
     const email = req.body.email;
     const password = req.body.password;
-    const cryptMail = CryptoJs.AES.encrypt(req.body.email, key, {iv: iv}).toString();
 
     if(email == null || password == null){
         return res.status(400).json({message: 'missing parameters'});
     }
 
-    models.User.findOne({ where: { email: cryptMail}})
+    models.User.findOne({ where: { email: email}})
         .then( userFound =>{
             if (userFound){
                 bcrypt.compare(password, userFound.password)
@@ -84,18 +89,21 @@ exports.login = (req, res) =>{
         .catch( error => res.status(500).json({error}));
 };
 
+/**
+ * Get a user
+ * @param {Object} req 
+ * @param {Object} res 
+ * @returns 
+ */
 exports.getUser = (req, res) =>{
     const userId = req.params.id;
     
     models.User.findOne({ where: { id: userId}})
         .then( user =>{
             if(user){
-                // const decrypt = CryptoJs.AES.decrypt(user.email, key);
-                // const decryptMail = JSON.parse(decrypt.toString(CryptoJS.enc.Hex));
-                // console.log(decryptMail);
                 models.Message.findAndCountAll({ where: { userId: user.id}})
                     .then(messages =>{
-                        res.status(200).json({ "firstName": user.firstName, "lastName": user.lastName, "messagesCount": messages.count});
+                        res.status(200).json({ "firstName": user.firstName, "lastName": user.lastName, "email": user.email, "messagesCount": messages.count});
                         
                     })
                     .catch(error => res.status(500).json({error}));
@@ -106,6 +114,12 @@ exports.getUser = (req, res) =>{
         .catch( error => res.status(500).json({error}));
 };
 
+/**
+ * Delete a user
+ * @param {Object} req 
+ * @param {Object} res 
+ * @returns 
+ */
 exports.deleteUser = async (req, res) =>{
     const userId = req.params.id;
     const token = req.headers.authorization;
@@ -140,6 +154,12 @@ exports.deleteUser = async (req, res) =>{
     .catch( error => res.status(500).json({error}))
 };
 
+/**
+ * Update a user's password
+ * @param {Object} req 
+ * @param {Object} res 
+ * @returns 
+ */
 exports.updatePassword = (req, res) =>{
     const userId = req.params.id;
     const newPassword = req.body.newPassword;
@@ -158,7 +178,7 @@ exports.updatePassword = (req, res) =>{
 };
 
 /**
- * Vérification d'un mail d'une apparence valide
+ * Check an email with a valid appearance
  * @param {String} mail 
  * @returns {Boolean}
  */
@@ -169,8 +189,8 @@ exports.updatePassword = (req, res) =>{
 };
 
 /**
- * Vérification d'un mot de passe contenant au moins 8 caractères
- * et contenant des chiffres, des lettres et seulement ._- comme caractères spéciaux
+ * Checking a password containing at least 8 characters
+ * and containing numbers, letters and only ._- as special characters
  * @param {String} password 
  * @returns {Boolean}
  */
@@ -181,7 +201,7 @@ const testPassword = (password) =>{
 };
 
 /**
- * Vérification d'un mot sans caractères spéciaux
+ * Checking a word without special characters
  * @param {String} mot 
  * @returns {Boolean}
  */
