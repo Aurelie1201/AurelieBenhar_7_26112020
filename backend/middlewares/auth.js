@@ -12,8 +12,6 @@ module.exports = (req, res, next) =>{
         const decodatedToken = jsonWebToken.verify(token, process.env.TOKEN_KEY);
         const userId = decodatedToken.userId.toString();
         if (req.body.userId && req.body.userId !== userId){
-            console.log(req.body.userId);
-            console.log(userId);
             throw 'User ID non valable';
         } else{
             next();

@@ -11,7 +11,7 @@
         font-size: larger;
         font-weight: bold;
     };
-    & input{
+    & #delete{
         margin-bottom: 20px;
         padding: 5px;
         border: 1px solid #0D7D69;
@@ -28,6 +28,25 @@
     @media (min-width: 500px){
         & div, p{
             text-align: center;
+        }
+    }
+    & .section-password{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 15px;
+        & label{
+            font-weight: bold;
+            font-size: large;
+            color: #0D7D69;
+            margin: 10px;
+        }
+        & #btnModifyPassword{
+            margin-top: 10px;
+            padding: 5px;
+            border: 1px solid #0D7D69;
+            box-shadow: 1px 1px 1px #0D7D69;
+            border-radius: 5px;
         }
     }
 };

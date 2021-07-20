@@ -30,11 +30,13 @@ const allMessages = async ()=>{
         let writeComments = "";
         let date = new Date(allMessages[i].createdAt).toLocaleDateString('fr-FR', { year: "numeric", month: "long", day: "numeric" });
         
-        if(nbComments === 0){
+        if(nbComments === 0 ){
             writeComments = "aucun commentaire";
-        } else{
-            writeComments += nbComments +" commentaires";
-        };
+        } else if(nbComments === 1){
+            writeComments += nbComments +" commentaire";
+            } else{
+                writeComments += nbComments +" commentaires";
+            }
         if(!url){
             url = "../assetts/icon.png";
         };

@@ -11,6 +11,7 @@ form.addEventListener('submit', (event=>{
     const content = document.getElementById("content").value;
     const file = document.getElementById("file").files[0];
     let message = {};
+    let header = {};
 
     if(file){
         const formData = new FormData();
@@ -21,14 +22,16 @@ form.addEventListener('submit', (event=>{
             userId: userId
         }));
         message = formData;
+        header = { Accept: "application/json",  Authorization: "Bearer "+sessionStorage.token}
         // message = {title: title, content: content, userId: userId, file: file};
     } else{
         message = JSON.stringify( {title: title, content: content, userId: userId} );
+        header = { "Content-Type": "application/json",  Authorization: "Bearer "+sessionStorage.token}
     }
    
     fetch(apiRoute("message"), {
         method: "POST", 
-        headers:{ "Content-Type": "application/json", Authorization: "Bearer "+sessionStorage.token},
+        headers: header,
         body: message
     })
         .then(response =>{

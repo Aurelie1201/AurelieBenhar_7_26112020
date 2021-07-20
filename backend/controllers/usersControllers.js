@@ -106,7 +106,7 @@ exports.getUser = (req, res) =>{
         .catch( error => res.status(500).json({error}));
 };
 
-exports.deleteUser = (req, res) =>{
+exports.deleteUser = async (req, res) =>{
     const userId = req.params.id;
     const token = req.headers.authorization;
     const decodedToken = jwt.decode(token.split(" ")[1]);
@@ -116,47 +116,46 @@ exports.deleteUser = (req, res) =>{
     if(!admin && userId !=userIdToken){
         res.status(401).json({message: "Unauthorized to delete this user"});
     } else{
-        models.User.findOne({where: {id: userId}})
-            .then(user =>{
-                    models.Message.findAll({ where: {userId: userId}})
-                        .then(messages =>{
-                            for (let message of messages){
-                                console.log('1');
-                                let filename = message.attachment.split('/images/')[1];
-                                fileSystem.unlink(`images/${filename}`, () =>{
-                                    models.Comment.destroy({where: {messageId: message.id}});
-                                })
-                            }
-                            models.Message.destroy({where: {userId: userId}})
-                                .then(destroy =>{
-                                    user.destroy();
-                                    res.status(200).json({message: "User deleted"});
-                                })
-                                .catch(error => res.status(500).json({error}));
-                        })
-                        .catch(error => res.status(500).json({error}));
-            })
-            .catch(error => res.status(500).json({error}));
+        await models.Comment.destroy({ where: {userId: userId}});
+
+        const messages = await models.Message.findAll({ where: {userId: userId}});
+        let filename;
+        for(let message of messages) {
+            if(message.attachment == null){
+                await models.Comment.destroy({ where: { messageId: message.id}});
+                await models.Message.destroy({ where: { id: message.id }});
+            } else{
+                filename = message.attachment.split('/images/')[1];
+                fileSystem.unlink(`images/${filename}`, async () =>{
+                    await models.Comment.destroy({ where: { messageId: message.id}});
+                    await models.Message.destroy({ where: { id: message.id }});
+                })
+            };
         };
-}
+            
+    };
+    
+    models.User.destroy({where: {id: userId}})
+    .then(destroy => res.status(200).json({message: "User deleted"}))
+    .catch( error => res.status(500).json({error}))
+};
 
-// models.Message.destroy({where: {userId: userId}})
-//                     .then(destroy =>{
-//                         user.destroy();
-//                         res.status(200).json({message: "User deleted"});
-//                     })
-//                     .catch(error => res.status(500).json({error}));
-
-// exports.updatePassword = (req, res) =>{
-//     const userId = req.body.userId;
-//     const newPassword = req.body.password;
-
-//     models.User.findOne({ attributes: ['id', 'password'], where: { id: userId}})
-//         .then( user =>{
-//             user.update
-//         })
-//         .catch( error => res.status(500).json({error}));
-// };
+exports.updatePassword = (req, res) =>{
+    const userId = req.params.id;
+    const newPassword = req.body.newPassword;
+     console.log(newPassword)
+    if(!testPassword(newPassword)){
+        res.status(400).json({message: "password invalid"})
+    }else{
+        bcrypt.hash(newPassword, 10)
+            .then(hash => {
+                models.User.update({ password: hash}, { where: { id: userId}})
+                    .then(response => res.status(200).json({message: 'password changed'}))
+                    .catch(error => res.status(500).json({error}));
+                })      
+            .catch(error => res.status(500).json({error}));
+    }
+};
 
 /**
  * Vérification d'un mail d'une apparence valide

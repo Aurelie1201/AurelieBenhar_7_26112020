@@ -3,6 +3,7 @@ if(!sessionStorage.token){
     window.location.href = "login.html";
 }
 
+const modifyButton = document.getElementById("btnModifyPassword");
 const deleteButton = document.getElementById("delete");
 const userId = sessionStorage.userId;
 
@@ -34,9 +35,30 @@ deleteButton.onclick = () =>{
         body: userId
     })
         .then(response =>{
-            alert("Votre compte a bien été supprimé");
-            sessionStorage.clear();
-            window.location.href = "index.html";
+            if(response.status == 200){
+                alert("Votre compte a bien été supprimé");
+                sessionStorage.clear();
+                window.location.href = "index.html";
+            } else{
+                alert("une erreur est survenue")
+            };
         })
         .catch(error =>{console.log(error)});
+};
+
+modifyButton.onclick = () =>{
+    const newPassword = document.getElementById("password").value;
+    fetch(apiRoute("getOneUser")+userId, {
+        method: "PUT",
+        headers:{ Accept: "application/json", "Content-Type": "application/json", Authorization: "Bearer "+sessionStorage.token},
+        body: JSON.stringify({newPassword})
+    })
+        .then(response => response.json())
+        .then(response =>{
+            if(response.message == "password changed"){
+                alert("Votr mot de passe a bien été changé");
+                window.location.href = "home.html";
+            }
+        })
+        .catch(error => console.log(error));
 };
