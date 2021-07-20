@@ -7,12 +7,12 @@ const form = document.getElementsByTagName('form')[0];
 form.addEventListener('submit', (event=>{
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
-    console.log('coucou')
+    
     if(!testMail(email) || !testPassword(password)){
         alert("Veuillez renseignez des champs corrects");
     } else{
         const user = { email: email, password: password };
-        console.log(user);
+        
         fetch(apiRoute("login"), {
             method: "POST",
             headers:{ Accept: "application/json", "Content-Type": "application/json"},
@@ -48,7 +48,6 @@ form.addEventListener('submit', (event=>{
  */
  const testMail = (mail) =>{
     let regMail = new RegExp ("^[0-9a-z._-]+@{1}[0-9a-z.-]{2,}[.]{1}[a-z]{2,5}");
-    console.log("coucou mail");
     return regMail.test(mail);
 };
 
@@ -60,6 +59,5 @@ form.addEventListener('submit', (event=>{
  */
 const testPassword = (password) =>{
     let regPassword = new RegExp ("^[0-9a-zA-Z._-]{8,}");
-    console.log("coucou password");
     return regPassword.test(password);
 };

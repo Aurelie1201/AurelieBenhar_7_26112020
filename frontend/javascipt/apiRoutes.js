@@ -38,7 +38,6 @@ const getNbComments = async (messageId) =>{
     });
     const comments = await NbComments.json();
     const countComments = comments.count;
-    console.log(comments);
     return countComments;
 };
 

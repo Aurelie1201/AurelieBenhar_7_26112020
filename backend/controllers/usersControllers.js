@@ -163,7 +163,7 @@ exports.deleteUser = async (req, res) =>{
 exports.updatePassword = (req, res) =>{
     const userId = req.params.id;
     const newPassword = req.body.newPassword;
-     console.log(newPassword)
+    
     if(!testPassword(newPassword)){
         res.status(400).json({message: "password invalid"})
     }else{
@@ -184,7 +184,7 @@ exports.updatePassword = (req, res) =>{
  */
  const testMail = (mail) =>{
     let regMail = new RegExp ("^[0-9a-z._-]+@{1}[0-9a-z.-]{2,}[.]{1}[a-z]{2,5}");
-    console.log("coucou mail");
+    
     return regMail.test(mail);
 };
 
@@ -196,7 +196,7 @@ exports.updatePassword = (req, res) =>{
  */
 const testPassword = (password) =>{
     let regPassword = new RegExp ("^[0-9a-zA-Z._-]{8,}");
-    console.log(regPassword.test(password));
+    
     return regPassword.test(password);
 };
 

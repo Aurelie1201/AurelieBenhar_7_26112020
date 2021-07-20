@@ -19,7 +19,7 @@ exports.createMessage  = (req, res) =>{
         userId = message.userId;
         attachment = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
     } else{
-        console.log(req.body);
+        
         title = req.body.title;
         content = req.body.content;
         userId = req.body.userId;
@@ -29,7 +29,7 @@ exports.createMessage  = (req, res) =>{
     if(title == null || content == null){
         return res.status(400).json({ message: "Parameters missing"});
     }
-    console.log(userId);
+    
     models.Message.create({ title: title, content: content, likes: 0, UserId: userId, attachment: attachment})
         .then(newMessage =>{
             res.status(200).json(newMessage);
@@ -83,8 +83,9 @@ exports.deleteMessage = (req, res) =>{
             if(userId != message.userId && !admin){
                 res.status(401).json({message: "Unauthorized to delete this message"});
             } else{
-                const filename = message.attachment.split('/images/')[1];
-                fileSystem.unlink(`images/${filename}`, () =>{
+                if(message.attachment){
+                    const filename = message.attachment.split('/images/')[1];
+                    fileSystem.unlink(`images/${filename}`, () =>{
                     models.Comment.destroy({where: {messageId: id}})
                         .then(destroy =>{
                             message.destroy();
@@ -92,6 +93,15 @@ exports.deleteMessage = (req, res) =>{
                         })
                         .catch(error => res.status(500).json({error}));
                     })
+                } else{
+                    models.Comment.destroy({where: {messageId: id}})
+                        .then(destroy =>{
+                            message.destroy();
+                            res.status(200).json({message: "Message deleted"});
+                        })
+                        .catch(error => res.status(500).json({error}));
+                }
+                
             };
         })
         .catch(error => res.status(500).json({error}));

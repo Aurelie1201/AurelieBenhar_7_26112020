@@ -1,5 +1,3 @@
-console.log(apiRoute("signup"));
-
 const form = document.getElementsByTagName('form')[0];
 
 /**
@@ -13,7 +11,7 @@ form.addEventListener('submit', (event=>{
 
     
     const user = { firstName: firstName, lastName: lastName, email: email, password: password };
-    console.log(user);
+    
     fetch(apiRoute("signup"), {
         method: "POST",
         headers:{ Accept: "application/json", "Content-Type": "application/json"},

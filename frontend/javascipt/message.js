@@ -1,4 +1,3 @@
-console.log(sessionStorage);
 if(!sessionStorage.token){
     window.location.href = "login.html";
 };
@@ -28,7 +27,7 @@ const oneMessage = async ()=>{
     if(!url){
         url = "../assetts/icon.png";
     }
-    console.log(comments);
+    
     h1.innerHTML = name;
     divMessage.innerHTML = '<div class="message--content">'+
                             '<h2>'+ title + '</h2>'+
@@ -42,7 +41,7 @@ const oneMessage = async ()=>{
         btnDelete.classList.add("btnDelete");
         parentElement.insertBefore(btnDelete, nextElement);
         const body = JSON.stringify({"userId": message.userId});
-        console.log("body"+body);
+        
         btnDelete.onclick = () =>{
             fetch(apiRoute("message")+id, {
                 method: "DELETE", 
@@ -50,7 +49,6 @@ const oneMessage = async ()=>{
                 body: body
             })
             .then(response =>{
-                console.log(response);
                 alert("Votre message a bien été supprimé");
                 window.location.href = "home.html";
             })
@@ -72,7 +70,7 @@ const getComments = async ()=>{
     const comments = allOfComments.rows;
     const divComments = document.getElementsByClassName("allComments")[0];
     let writeHtml = "";
-    console.log("coucou "+comments);
+    
     for(i = 0; i < comments.length; i++){
         
         let userId = comments[i].userId;
