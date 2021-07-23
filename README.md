@@ -40,4 +40,4 @@ Pour le front dans le dossier html ouvrir la page index.html.
 
 Pour avoir un compte administrateur, créer un utilisateur puis effectuer un update sur mysql avec l'identifiant (userId) correspondant à cet utilisateur :
 
-``UPDATE users SET isAdmin = true WHERE users.`id` = userId;``
+``UPDATE users SET isAdmin = '1' WHERE users.`id` = userId;``
