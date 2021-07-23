@@ -34,7 +34,7 @@ const oneMessage = async ()=>{
                             '<p>'+ content + '</p></div>'+
                             '<img src="'+ url +'" alt="image du message"/>';
 
-    if (message.userId == sessionStorage.userId){
+    if (message.userId == sessionStorage.userId || sessionStorage.isAdmin == "true"){
         const btnDelete = document.createElement('input');
         btnDelete.setAttribute("type", "button");
         btnDelete.setAttribute("value", "Supprimer votre message");
