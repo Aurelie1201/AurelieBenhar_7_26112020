@@ -15,10 +15,22 @@ La partie frontend Javascript et Sass ont été utilisés.
 
 Un fichier .env est à utiliser, le fichier .env.example doit être copié et rempli avec des codes valides.
 Remplir le fichier config.js avec des données valides pour se connecter via sequelize.
-C'est la base "development" qui est utilisée.
-Taper la commande sequelize db:migrate pour obtenir les tables utilisées dans ce projet (à savoir users, messages et coments)
 
-Depuis le dossier backend, exécuter npm install puis node server.
+C'est la base "development" qui est utilisée ici.
+
+Dans le dosier backend taper les commandes :
+
+-``npm install``
+-``npm install --save-dev sequelize-cli``
+
+Ensuite créer une base de données "database_development" dans mysql.
+
+Puis :
+
+-``npx sequelize db:migrate``
+-``node server``
+
+
 Le lancement du serveur s'effectue sur le port 8080.
 
-Pour le front ouvrir la page index.html
+Pour le front dans le dossier html ouvrir la page index.html.
