@@ -20,15 +20,17 @@ C'est la base "development" qui est utilisée ici.
 
 Dans le dosier backend taper les commandes :
 
--``npm install``
--``npm install --save-dev sequelize-cli``
+``npm install``
+
+``npm install --save-dev sequelize-cli``
 
 Ensuite créer une base de données "database_development" dans mysql.
 
 Puis :
 
--``npx sequelize db:migrate``
--``node server``
+``npx sequelize db:migrate``
+
+``node server``
 
 
 Le lancement du serveur s'effectue sur le port 8080.
